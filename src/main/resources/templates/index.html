@@ -11,11 +11,19 @@
 
     <hr />
 
-    <h2>Update Message</h2>
     <form method="POST" action="/">
-      Text:
-      <input type="text" name="hello" size="30" />
-      <button type="submit">Update</button>
+      <table>
+        <tr>
+          <td>Message:</td>
+          <td>
+            <input type="text" name="text" size="40" required />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button type="submit">Update</button></td>
+        </tr>
+      </table>
     </form>
   </body>
 </html>

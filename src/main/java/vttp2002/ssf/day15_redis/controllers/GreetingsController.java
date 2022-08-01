@@ -1,6 +1,7 @@
 package vttp2002.ssf.day15_redis.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
@@ -16,28 +17,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class GreetingsController {
 
   @Autowired
-  private RedisTemplate<String, Object> redisTemplate;
+  @Qualifier("redislab")
+  private RedisTemplate<String, String> redisTemplate;
 
   @GetMapping
   public String getGreetings(Model model) {
-    ValueOperations<String, Object> ops = redisTemplate.opsForValue();
+    ValueOperations<String, String> ops = redisTemplate.opsForValue();
     Object greetings = ops.get("greetings");
     model.addAttribute("hello", greetings.toString());
     return "index";
   }
 
-  // @GetMapping
-  // public String getGreetings(Model model) {
-  // String hello = "hello, world";
-  // model.addAttribute("hello", hello);
-  // return "index";
-  // }
-
   @PostMapping
-  String postGreeting(@RequestBody MultiValueMap<String, String> form, Model model) {
-    String hello = form.getFirst("hello");
-    model.addAttribute("hello", hello);
+  public String postGreetings(@RequestBody MultiValueMap<String, String> form, Model model) {
+    ValueOperations<String, String> ops = redisTemplate.opsForValue();
+    String text = form.getFirst("text");
+    ops.set("greetings", text);
+    model.addAttribute("hello", text);
     return "index";
   }
-
 }
