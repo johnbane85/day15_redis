@@ -43,7 +43,7 @@ public class AppConfig {
     // Create RedisTemplate
     RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
     redisTemplate.setConnectionFactory(jedisFac);
-    // Explain tomorrow
+    // Convert from UTF-16 to UTF8
     redisTemplate.setKeySerializer(new StringRedisSerializer());
     redisTemplate.setValueSerializer(new StringRedisSerializer());
 
